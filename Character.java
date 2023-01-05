@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Character {
     // All the key variables of a character
@@ -152,7 +153,16 @@ public class Character {
     public void addAge(){
         age++;
     }
-    public String toString() {
-        return "Name: " + name + "\n" + "Age: " + age + "\n" + "Balance: " + balance + "\n" + "Salary: " + salary + "\n" + "Marital Status: " + maritalStatus + "\n" + "Education: " + education + "\n" + "Happiness: " + happiness + "\n" + "Health: " + health + "\n" + "IQ: " + IQ + "\n" + "Look: " + looks;
+
+    public static int generateStat() {
+        Random rand = new Random();
+        int stat = 0;
+        stat = rand.nextInt(101);
+        return stat;
     }
+    
+    public String toString() {
+        return "Name: " + name + "\n" + "Age: " + age + "\n" + "Balance: $" + balance + "\n" + "Salary: $" + salary + "\n" + "Marital Status: " + maritalStatus + "\n" + "Education: " + education + "\n" + "Happiness: " + happiness + "\n" + "Health: " + health + "\n" + "IQ: " + IQ + "\n" + "Look: " + looks;
+    }
+
 }

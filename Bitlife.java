@@ -5,10 +5,7 @@
  public class Bitlife{
     public static void main(String[] args) {
         /*
-        To Do List
-        1) Fix the siblings age compared to parent age
-        2) Fix education, salary, balance
-        3) Make marital status change depending on age 
+
 
 
         Character Main Class
