@@ -14,143 +14,73 @@ public class BitLifeRunner {
         // To Do List
         // 1) Fix the siblings age compared to parent age
         // 2) Fix education, salary, balance
-        // 3) Make marital status change depending on age 
+
         Scanner scan = new Scanner(System.in);
         String mainCharacterName = " ";
         System.out.println("Enter your name");
         mainCharacterName = scan.nextLine();
-        Character[] characters = new Character[5];
+        int familySize = 0;
+        familySize = Family.generateFamilySize();       // save the generated position of family (2-4)
+        Family[] family = new Family[familySize+1];
         int randomHa = 0;
         int randomHe = 0;
         int randomIQ = 0;
         int randomLooks = 0;
         int randomAge = 0;
         int randomSalary = 0;
-        int familySize = 0;
-        familySize = generateFamilySize();
 
-        for (int i = 0; i < familySize + 1; i++) {    
+        for (int i = 0; i < familySize; i++) {    
             switch (i) {
                 case 0:
-                    randomHa = generateStat();
-                    randomHe = generateStat();
-                    randomIQ = generateStat();
-                    randomLooks = generateStat();
-                    characters[i] = new Character(mainCharacterName, 0, 0.00, 0, getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
+                    randomHa = Character.generateStat();
+                    randomHe = Character.generateStat();
+                    randomIQ = Character.generateStat();
+                    randomLooks = Character.generateStat();
+                    family[i] = new Family(mainCharacterName, 0, 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 1:
-                    randomHa = generateStat();
-                    randomHe = generateStat();
-                    randomIQ = generateStat();
-                    randomLooks = generateStat();
-                    randomAge = generateAge(1);
-                    characters[i] = new Character("Father", generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    randomHa = Character.generateStat();
+                    randomHe = Character.generateStat();
+                    randomIQ = Character.generateStat();
+                    randomLooks = Character.generateStat();
+                    randomAge = Family.generateAge(1);
+                    family[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 2:
-                    randomHa = generateStat();
-                    randomHe = generateStat();
-                    randomIQ = generateStat();
-                    randomLooks = generateStat();
-                    randomAge = generateAge(1);
-                    characters[i] = new Character("Mother", generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    randomHa = Character.generateStat();
+                    randomHe = Character.generateStat();
+                    randomIQ = Character.generateStat();
+                    randomLooks = Character.generateStat();
+                    randomAge = Family.generateAge(1);
+                    family[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 3:
-                    randomHa = generateStat();
-                    randomHe = generateStat();
-                    randomIQ = generateStat();
-                    randomLooks = generateStat();
-                    randomAge = generateAge(1);
-                    characters[i] = new Character("Sibling " + (i-2), generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    randomHa = Character.generateStat();
+                    randomHe = Character.generateStat();
+                    randomIQ = Character.generateStat();
+                    randomLooks = Character.generateStat();
+                    randomAge = Family.generateAge(1);
+                    family[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 4:
-                    randomHa = generateStat();
-                    randomHe = generateStat();
-                    randomIQ = generateStat();  
-                    randomLooks = generateStat();
-                    randomAge = generateAge(1);
-                    characters[i] = new Character("Sibling" + (i-2), generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    randomHa = Character.generateStat();
+                    randomHe = Character.generateStat();
+                    randomIQ = Character.generateStat();
+                    randomLooks = Character.generateStat();
+                    randomAge = Family.generateAge(1);
+                    family[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
                     break;
             }
         }
-        checkProfile(characters, familySize);
-
-
-
+    
+    // Game Methods
+        checkFamily(family, familySize);
     }
 
-    private static String getMaritalStatus(int i) {
-        String maritalStatus = " ";
-        if(generateAge(i) > 16){
-            maritalStatus = "Married";
-        }else{
-            maritalStatus = "Single";
-        }
-        return maritalStatus;
-    }
-
-    public static int generateStat() {
-        Random rand = new Random();
-        int stat = 0;
-        stat = rand.nextInt(101);
-        return stat;
-    }
-
-    public static void checkProfile(Character[] characters, int familySize) {
-        for (int i = 0; i < familySize + 1; i++) {
+    // Runner Methods
+    public static void checkFamily(Character[] characters, int familySize) {
+        for (int i = 0; i < familySize; i++) {
             System.out.println("\n" + characters[i].toString());
         }
-    }
-
-    public static int generateAge(int i) {
-        Random rand = new Random();
-        int age = 0;
-        if (i > 0 && i < 3) {  // i represent the placement of the character array
-            age = rand.nextInt(25)+18;
-        } else if (i == 0) {
-            age = 0;
-        } else {
-            age = rand.nextInt(3);
-        }
-        return age;
-    }
-
-    public static int generateSalary(int age){
-        Random rand = new Random();
-        int salary = 0;
-        generateEducation();
-        if (generateEducation().charAt(0) == 'M') {
-            salary = rand.nextInt(20000)+30000;
-        } else if (generateEducation().charAt(0) == 'H') {
-            salary = rand.nextInt(20000)+40000;
-        }else{
-            salary = rand.nextInt(40000)+60000;
-        }
-        return salary;
-    }
-
-    public static String generateEducation() {
-        Random rand = new Random();
-        String education = " ";
-        if (rand.nextInt(4) == 0) {
-            education = "Middle School";
-        } else if (rand.nextInt(4) == 1) {
-            education = "High School";
-        } else {
-            education = "College";
-        }
-        return education;
-    }
-    // 0 Middle School (1/4)
-        // ($30,000 - $50,000)
-    // 1 High School (1/4)
-        // ($40,000 - $60,000)
-    // 2 or 3 College (1/2)
-        // ($60,000 - $100,000)
-
-    public static int generateFamilySize() {
-        Random rand = new Random();
-        int familySize = 0;
-        familySize = rand.nextInt(3) + 2;
-        return familySize;
     }
 }
