@@ -10,6 +10,11 @@ public class BitLifeRunner {
         //     5. Balance = 0;
         //     6. Occupation = baby
         //     7. A menu to age, who to interact, activities
+
+        // To Do List
+        // 1) Fix the siblings age compared to parent age
+        // 2) Fix education, salary, balance
+        // 3) Make marital status change depending on age 
         Scanner scan = new Scanner(System.in);
         String mainCharacterName = " ";
         System.out.println("Enter your name");
@@ -31,7 +36,7 @@ public class BitLifeRunner {
                     randomHe = generateStat();
                     randomIQ = generateStat();
                     randomLooks = generateStat();
-                    characters[i] = new Character(mainCharacterName, 0, 0.00, 0, "Single", "None", randomHa, randomHe, randomIQ, randomLooks);
+                    characters[i] = new Character(mainCharacterName, 0, 0.00, 0, getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 1:
                     randomHa = generateStat();
@@ -39,7 +44,7 @@ public class BitLifeRunner {
                     randomIQ = generateStat();
                     randomLooks = generateStat();
                     randomAge = generateAge(1);
-                    characters[i] = new Character("Father", generateAge(1), generateSalary(generateAge(i)), generateSalary(generateAge(i)), "Married", generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    characters[i] = new Character("Father", generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 2:
                     randomHa = generateStat();
@@ -47,7 +52,7 @@ public class BitLifeRunner {
                     randomIQ = generateStat();
                     randomLooks = generateStat();
                     randomAge = generateAge(1);
-                    characters[i] = new Character("Mother", generateAge(2), generateSalary(generateAge(i)), generateSalary(generateAge(i)), "Married", generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    characters[i] = new Character("Mother", generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 3:
                     randomHa = generateStat();
@@ -55,7 +60,7 @@ public class BitLifeRunner {
                     randomIQ = generateStat();
                     randomLooks = generateStat();
                     randomAge = generateAge(1);
-                    characters[i] = new Character("Sibling " + (i-2), generateAge(2), generateSalary(generateAge(i)), generateSalary(generateAge(i)), "Married", generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    characters[i] = new Character("Sibling " + (i-2), generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 4:
                     randomHa = generateStat();
@@ -63,7 +68,7 @@ public class BitLifeRunner {
                     randomIQ = generateStat();  
                     randomLooks = generateStat();
                     randomAge = generateAge(1);
-                    characters[i] = new Character("Sibling" + (i-2), generateAge(2), generateSalary(generateAge(i)), generateSalary(generateAge(i)), "Married", generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    characters[i] = new Character("Sibling" + (i-2), generateAge(i), generateSalary(generateAge(i)), generateSalary(generateAge(i)), getMaritalStatus(i), generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
                     break;
             }
         }
@@ -71,6 +76,16 @@ public class BitLifeRunner {
 
 
 
+    }
+
+    private static String getMaritalStatus(int i) {
+        String maritalStatus = " ";
+        if(generateAge(i) > 16){
+            maritalStatus = "Married";
+        }else{
+            maritalStatus = "Single";
+        }
+        return maritalStatus;
     }
 
     public static int generateStat() {
@@ -91,6 +106,8 @@ public class BitLifeRunner {
         int age = 0;
         if (i > 0 && i < 3) {  // i represent the placement of the character array
             age = rand.nextInt(25)+18;
+        } else if (i == 0) {
+            age = 0;
         } else {
             age = rand.nextInt(3);
         }
