@@ -77,4 +77,6 @@ public class Family extends Character{
         }
         return salary;
     }
+
+    
 }

@@ -26,6 +26,7 @@ public class BitLifeRunner {
         int randomHe = 0;
         int randomIQ = 0;
         int randomLooks = 0;
+        int randomRelationLevel = 0;
         int randomAge = 0;
         int randomSalary = 0;
 
