@@ -18,3 +18,12 @@ git branch // Check which branch you are in, look for which branch is highlighte
 
 
 
+
+
+
+
+
+
+
+
+
