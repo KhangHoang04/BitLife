@@ -5,8 +5,7 @@ Features Lists
 2. Create the interactive activties menu with the members of family ()
 3. Fix the familySize or the displayFamily function (there is a chance for an error to occur when you run and press 4 for option to view relationship)
  
-
-
+ 
 Git Commands
 1. git branch (branchname)  // Create the branch
 2. git checkout (branchname) // To select the branch
