@@ -154,7 +154,7 @@ public class Character {
         age++;
     }
 
-    public static int generateStat() {
+    public static int generateStat() {//looks, health, happiness, IQ, and relationshiplvl all share this method
         Random rand = new Random();
         int stat = 0;
         stat = rand.nextInt(101);

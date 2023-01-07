@@ -37,7 +37,7 @@ public class BitLifeRunner {
                     randomHe = Character.generateStat();
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
-                    family[i] = new Family(mainCharacterName, 0, 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
+                    family[i] = new Family(mainCharacterName, 0, 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, 0);
                     break;
                 case 1:
                     randomHa = Character.generateStat();
@@ -45,7 +45,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    family[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 2:
                     randomHa = Character.generateStat();
@@ -53,7 +53,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks);
+                    family[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 3:
                     randomHa = Character.generateStat();
@@ -61,7 +61,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
+                    family[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 4:
                     randomHa = Character.generateStat();
@@ -69,7 +69,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
+                    family[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
             }
         }

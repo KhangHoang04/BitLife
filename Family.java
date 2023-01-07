@@ -4,11 +4,13 @@ public class Family extends Character{
 
     //private members
     private int familySize = 0;
+    private int relationLevel;
 
     // Constructor
     public Family(String name, int age, double balance, int salary, String maritalStatus, String education,
-    int happiness, int health, int IQ, int looks) {
+    int happiness, int health, int IQ, int looks, int relationLevel) {
         super(name, age, balance, salary, maritalStatus, education, happiness, health, IQ, looks);
+        this.relationLevel = relationLevel;
     }
 
     // Getter Methods
@@ -78,5 +80,9 @@ public class Family extends Character{
         return salary;
     }
 
-    
+    //ToString
+    @Override
+    public String toString(){
+        return super.toString() + "\n" + "Relationship Level: " + relationLevel;
+    }
 }
