@@ -4,7 +4,7 @@ Features Lists
 1. Create RelationLevel with everyone (do it similar to randomStat () --> √
 2. Create the interactive activties menu with the members of family ()
 3. Fix the familySize or the displayFamily function (there is a chance for an error to occur when you run and press 4 for option to view relationship)
-
+ 
 
 
 Git Commands
