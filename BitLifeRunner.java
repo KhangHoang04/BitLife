@@ -12,6 +12,7 @@ public class BitLifeRunner {
         //     7. A menu to age, who to interact, activities
 
         Scanner scan = new Scanner(System.in);
+        Random rand = new Random();
         String mainCharacterName = " ";
         System.out.println("Enter your name");
         mainCharacterName = scan.nextLine();
@@ -91,7 +92,7 @@ public class BitLifeRunner {
                     break;
                 case 4: 
                     displayFamily(families, familySize);
-                    interactFamily(families, familySize, scan); // Ask us who to interact with and display the different option of interaction 
+                    interactFamily(families, familySize, scan, rand); // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
                     System.out.println("Incomplete");
@@ -104,21 +105,53 @@ public class BitLifeRunner {
     public static void checkProfile(Character[] characters) {
         System.out.println("\n" + characters[0].toString());
     }
+
     public static void displayFamily(Family[] families, int familySize) {
         for (int i = 1; i < familySize; i++) {
             System.out.println("\n" + families[i].toString());
         }
     }
-    public static void interactFamily(Family[] families, int familySize, Scanner scan) {
+
+    public static void interactFamily(Family[] families, int familySize, Scanner scan, Random rand) {
         int chooseFam = 0;
+        int chooseInteract = 0;
+        boolean wantToBack = false;
         System.out.println("\nWho do you want to interact with?"); 
         for (int i = 1; i < familySize; i++) {
             System.out.println(i + ". " + families[i].getName());
         }
-        chooseFam = scan.nextInt();
-        if(chooseFam == 1){
-            //compliment/ cancel
 
+        chooseFam = scan.nextInt();
+        while (wantToBack == false) {
+        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Back");
+        chooseInteract = scan.nextInt();
+            System.out.println("\n1. Compliment \n2. Back");
+            switch (chooseInteract) {
+                case 1: 
+                    if (generateOutcome(families, chooseFam, rand) == true) {
+                        families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()+5);
+                        System.out.println(families[chooseFam].getName() + " is flattered by your compliment. +5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
+                    } else {
+                        families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()-5);
+                        System.out.println(families[chooseFam].getName() + " was not flattered by your compliment. -5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
+                    }
+                    break;
+                case 2:
+                    wantToBack = true;
+                    break;     
+            }
         }
+    }
+
+    public static boolean generateOutcome(Family[] families, int chooseFam, Random rand) {
+        int chance = -1;
+        boolean success = false;
+        chance = rand.nextInt(101);
+        if (chance <= families[chooseFam].getRelationLevel()) {
+            success = true;
+        } else {
+            success = false;
+        }
+    return success;
     }
 }
