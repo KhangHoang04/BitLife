@@ -76,13 +76,19 @@ public class BitLifeRunner {
     }
 
     // Runner Methods
+    public static void checkProfile(Character[] characters) {
+        System.out.println("\n" + characters[0].toString());
+    }
     public static void displayFamily(Character[] characters, int familySize) {
         for (int i = 1; i < familySize; i++) {
             System.out.println("\n" + characters[i].toString());
         }
     }
-    public static void checkProfile(Character[] characters) {
-        System.out.println("\n" + characters[0].toString());
+    public static void interactFamily(Character[] characters, int familySize) {
+        System.out.println("\nWho do you want to interact with?"); 
+        for (int i = 1; i < familySize; i++) {
+            System.out.println(i + ". " + characters[i].getName());
+        }
     }
 
     // Create the menu to interact with the game
@@ -105,7 +111,7 @@ public class BitLifeRunner {
                     break;
                 case 4: 
                     displayFamily(characters, familiesSize);
-                    // interactFamily() // Ask us who to interact with and display the different option of interaction 
+                    interactFamily(characters, familiesSize); // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
                     System.out.println("Incomplete");
