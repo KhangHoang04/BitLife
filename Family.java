@@ -17,16 +17,22 @@ public class Family extends Character{
     public int getFamilySize() {
         return familySize;
     }
+    public int getRelationLevel(){
+        return relationLevel;
+    }
 
     // Setter Methods
     public void setFamilySize(int familySize) {
         this.familySize = familySize;
     }
+    public void setRelationLevel(int relationLevel) {
+        this.relationLevel = relationLevel;
+    }
 
     public static int generateFamilySize() {
         Random rand = new Random();
         int familySize = 0;
-        familySize = rand.nextInt(4) + 2;
+        familySize = rand.nextInt(3) + 2;
         return familySize;
     }
 

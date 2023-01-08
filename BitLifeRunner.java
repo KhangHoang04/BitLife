@@ -17,7 +17,7 @@ public class BitLifeRunner {
         mainCharacterName = scan.nextLine();
         int familySize = 0;
         familySize = Family.generateFamilySize();       // save the generated position of family (2-4)
-        Family[] family = new Family[familySize+1];
+        Character[] characters = new Character[familySize+1];
         int randomHa = 0;
         int randomHe = 0;
         int randomIQ = 0;
@@ -34,7 +34,7 @@ public class BitLifeRunner {
                     randomHe = Character.generateStat();
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
-                    family[i] = new Family(mainCharacterName, 0, 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, 0);
+                    characters[i] = new Character(mainCharacterName, 0, 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 1:
                     randomHa = Character.generateStat();
@@ -42,7 +42,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    characters[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 2:
                     randomHa = Character.generateStat();
@@ -50,7 +50,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    characters[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 3:
                     randomHa = Character.generateStat();
@@ -58,7 +58,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    characters[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 4:
                     randomHa = Character.generateStat();
@@ -66,14 +66,13 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    family[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    characters[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
             }
         }
     
     // Game Methods
-        gameMenu(family, scan);
-        displayFamily(family, familySize);
+        gameMenu(characters, scan, familySize);
     }
 
     // Runner Methods
@@ -86,18 +85,17 @@ public class BitLifeRunner {
         System.out.println("\n" + characters[0].toString());
     }
 
-
     // Create the menu to interact with the game
-    public static void gameMenu(Family[] family, Scanner scan) {
+    public static void gameMenu(Character[] characters, Scanner scan, int familiesSize) {
         boolean hasDied = false;
         int option = -1; // keep track of the player input 
-       System.out.println("\n" + "Name: " + family[0].getName() + "\t Balance: " + family[0].getBalance() + "\t Age:" + family[0].getAge());  
+        System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age:" + characters[0].getAge());  
         while (hasDied == false) {
             System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age" + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
             option = scan.nextInt();
             switch (option) {
                 case 1: 
-                    checkProfile(family);
+                    checkProfile(characters);
                     break;
                 case 2: 
                     System.out.println("Incomplete");
@@ -106,7 +104,8 @@ public class BitLifeRunner {
                     System.out.println("Incomplete");
                     break;
                 case 4: 
-                    displayFamily(family, option);
+                    displayFamily(characters, familiesSize);
+                    // interactFamily() // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
                     System.out.println("Incomplete");

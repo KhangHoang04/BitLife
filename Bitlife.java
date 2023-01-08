@@ -42,7 +42,7 @@
                 if passed, decreased the relationLevel by 7% 
                 if failed, decreased the relationLevel by 12%
                 limit to once per age 
-            +compliment() : void // equal chance to passed based relationLevel
+            +compliment() : void // equal chance to passed based relationLevel (relation level is 47% --> passed = 47% failed = 100 - relation level) --> RandomNextInt() --> 0-100 (0-47 passed or 47-100 failed)
                 if passed, increased the relationLevel by 5%
                 if failed, decreased the relationLevel by 5%
                 limit to once per age
