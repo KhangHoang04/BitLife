@@ -82,25 +82,35 @@ public class BitLifeRunner {
             System.out.println("\n" + characters[i].toString());
         }
     }
+    public static void checkProfile(Character[] characters) {
+        System.out.println("\n" + characters[0].toString());
+    }
+
 
     // Create the menu to interact with the game
     public static void gameMenu(Family[] family, Scanner scan) {
         boolean hasDied = false;
         int option = -1; // keep track of the player input 
+       System.out.println("\n" + "Name: " + family[0].getName() + "\t Balance: " + family[0].getBalance() + "\t Age:" + family[0].getAge());  
         while (hasDied == false) {
-            System.out.println("\n" + "Name: " + family[0].getName() + "\t Balance: " + family[0].getBalance() + "\t Age: " + family[0].getAge() + "\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age" + "\t 4. Relationships" + "\t 5. Activities" + "\n" + "Select your option");
+            System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age" + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
             option = scan.nextInt();
             switch (option) {
                 case 1: 
-                    System.out.println("Incomplete");
+                    checkProfile(family);
+                    break;
                 case 2: 
                     System.out.println("Incomplete");
+                    break;
                 case 3: 
                     System.out.println("Incomplete");
+                    break;
                 case 4: 
                     displayFamily(family, option);
+                    break;
                 case 5:
                     System.out.println("Incomplete");
+                    break;
             }
         }
     }
