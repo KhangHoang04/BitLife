@@ -16,8 +16,9 @@ public class BitLifeRunner {
         System.out.println("Enter your name");
         mainCharacterName = scan.nextLine();
         int familySize = 0;
-        familySize = Family.generateFamilySize();       // save the generated position of family (2-4)
+        familySize = Family.generateFamilySize();       // save the generated position of family (2-4
         Character[] characters = new Character[familySize+1];
+        Family[] families = new Family[familySize];
         int randomHa = 0;
         int randomHe = 0;
         int randomIQ = 0;
@@ -42,7 +43,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    characters[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 2:
                     randomHa = Character.generateStat();
@@ -50,7 +51,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    characters[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 3:
                     randomHa = Character.generateStat();
@@ -58,7 +59,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    characters[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 4:
                     randomHa = Character.generateStat();
@@ -66,33 +67,12 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    characters[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
             }
         }
-    
-    // Game Methods
-        gameMenu(characters, scan, familySize);
-    }
 
-    // Runner Methods
-    public static void checkProfile(Character[] characters) {
-        System.out.println("\n" + characters[0].toString());
-    }
-    public static void displayFamily(Character[] characters, int familySize) {
-        for (int i = 1; i < familySize; i++) {
-            System.out.println("\n" + characters[i].toString());
-        }
-    }
-    public static void interactFamily(Character[] characters, int familySize) {
-        System.out.println("\nWho do you want to interact with?"); 
-        for (int i = 1; i < familySize; i++) {
-            System.out.println(i + ". " + characters[i].getName());
-        }
-    }
-
-    // Create the menu to interact with the game
-    public static void gameMenu(Character[] characters, Scanner scan, int familiesSize) {
+        // Running the BitLife Game
         boolean hasDied = false;
         int option = -1; // keep track of the player input 
         System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age:" + characters[0].getAge());  
@@ -110,13 +90,35 @@ public class BitLifeRunner {
                     System.out.println("Incomplete");
                     break;
                 case 4: 
-                    displayFamily(characters, familiesSize);
-                    interactFamily(characters, familiesSize); // Ask us who to interact with and display the different option of interaction 
+                    displayFamily(families, familySize);
+                    interactFamily(families, familySize, scan); // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
                     System.out.println("Incomplete");
                     break;
             }
+        }
+    }
+    
+    // Runner Methods
+    public static void checkProfile(Character[] characters) {
+        System.out.println("\n" + characters[0].toString());
+    }
+    public static void displayFamily(Family[] families, int familySize) {
+        for (int i = 1; i < familySize; i++) {
+            System.out.println("\n" + families[i].toString());
+        }
+    }
+    public static void interactFamily(Family[] families, int familySize, Scanner scan) {
+        int chooseFam = 0;
+        System.out.println("\nWho do you want to interact with?"); 
+        for (int i = 1; i < familySize; i++) {
+            System.out.println(i + ". " + families[i].getName());
+        }
+        chooseFam = scan.nextInt();
+        if(chooseFam == 1){
+            //compliment/ cancel
+
         }
     }
 }

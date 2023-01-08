@@ -4,7 +4,7 @@ public class Family extends Character{
 
     //private members
     private int familySize = 0;
-    private int relationLevel;
+    private int relationLevel = 0;
 
     // Constructor
     public Family(String name, int age, double balance, int salary, String maritalStatus, String education,
@@ -17,6 +17,7 @@ public class Family extends Character{
     public int getFamilySize() {
         return familySize;
     }
+    
     public int getRelationLevel(){
         return relationLevel;
     }
@@ -25,6 +26,7 @@ public class Family extends Character{
     public void setFamilySize(int familySize) {
         this.familySize = familySize;
     }
+
     public void setRelationLevel(int relationLevel) {
         this.relationLevel = relationLevel;
     }
@@ -89,6 +91,6 @@ public class Family extends Character{
     //ToString
     @Override
     public String toString(){
-        return super.toString() + "\n" + "Relation: " + relationLevel;
+        return super.toString() + "\n" + "Relation: " +  relationLevel;
     }
 }
