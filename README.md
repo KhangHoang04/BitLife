@@ -1,8 +1,8 @@
 # BitLife
 
-Features Lists
-1. Figure out how to limit the amount of actions per age 
- 
+To Do list
+1. Decide how to limit the amount of action per age.
+
  
  
 Git Commands
