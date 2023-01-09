@@ -89,10 +89,6 @@ public class Family extends Character{
         return salary;
     }
 
-    // public void addAge() {
-    //     super.setAge(super.getAge()+1);
-    // }
-
     //ToString
     @Override
     public String toString(){
