@@ -2,6 +2,7 @@
 
 To Do list
 1. Decide how to limit the amount of action per age.
+2. Create a death method (chance of dying = 0.2 x age)
 
  
  
