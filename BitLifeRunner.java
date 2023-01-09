@@ -36,7 +36,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    families[i] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i-1] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 2:
                     randomHa = Character.generateStat();
@@ -44,7 +44,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    families[i] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i-1] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 3:
                     randomHa = Character.generateStat();
@@ -52,7 +52,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    families[i] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i-1] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 4:
                     randomHa = Character.generateStat();
@@ -60,7 +60,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(1);
-                    families[i] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[i-1] = new Family("Sibling" + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
             }
         }
@@ -102,14 +102,14 @@ public class BitLifeRunner {
         for (int i = 0; i < characters.length; i++) {
             characters[i].addAge();
         }
-        for (int i = 0; i < families.length; i++) {
-             families[i].addAge();
+        for (int i = 0; i < families.length-1; i++) {
+            families[i].addAge();
         }
         checkProfile(characters);
     }
 
     public static void displayFamily(Family[] families, int familySize) {
-        for (int i = 1; i < familySize; i++) {
+        for (int i = 0; i < familySize; i++) {
             System.out.println("\n" + families[i].toString());
         }
     }
@@ -119,7 +119,7 @@ public class BitLifeRunner {
         int chooseInteract = 0;
         boolean wantToBack = false;
         System.out.println("\nWho do you want to interact with?"); 
-        for (int i = 1; i < familySize; i++) {
+        for (int i = 0; i < familySize; i++) {
             System.out.println(i + ". " + families[i].getName());
         }
 
