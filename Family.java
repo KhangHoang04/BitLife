@@ -21,23 +21,7 @@ public class Family extends Character{
     public int getRelationLevel(){
         return relationLevel;
     }
-
-    // Setter Methods
-    public void setFamilySize(int familySize) {
-        this.familySize = familySize;
-    }
-
-    public void setRelationLevel(int relationLevel) {
-        this.relationLevel = relationLevel;
-    }
-
-    public static int generateFamilySize() {
-        Random rand = new Random();
-        int familySize = 0;
-        familySize = rand.nextInt(3) + 2;
-        return familySize;
-    }
-
+    
     public static String getMaritalStatus(int i) {
         String maritalStatus = " ";
         if(generateAge(i) > 16){
@@ -46,6 +30,23 @@ public class Family extends Character{
             maritalStatus = "Single";
         }
         return maritalStatus;
+    }
+    
+    // Setter Methods
+    public void setFamilySize(int familySize) {
+        this.familySize = familySize;
+    }
+    
+    public void setRelationLevel(int relationLevel) {
+        this.relationLevel = relationLevel;
+    }
+    
+    // Methods
+    public static int generateFamilySize() {
+        Random rand = new Random();
+        int familySize = 0;
+        familySize = rand.nextInt(3) + 2;
+        return familySize;
     }
 
     public static int generateAge(int i) { 
@@ -87,6 +88,10 @@ public class Family extends Character{
         }
         return salary;
     }
+
+    // public void addAge() {
+    //     super.setAge(super.getAge()+1);
+    // }
 
     //ToString
     @Override

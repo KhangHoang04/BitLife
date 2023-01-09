@@ -1,8 +1,9 @@
 # BitLife
 
 Features Lists
-1. interactFamily method + menu (runner class)
-2. generateOutcome method (runner class)
+1. Fix age+ for families line 106
+2. Figure out how to limit the amount of actions per age 
+ 
  
  
 Git Commands

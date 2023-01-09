@@ -3,14 +3,6 @@ import java.util.Random;
 
 public class BitLifeRunner {
     public static void main(String[] args) {
-        // 1. Create a character at age 0 with the user inputted name 
-        //     2. Generate a mother, father, siblings w Random Names. Create an object array that reps family memberss
-        //     3. Generate random relationLevel (0-100) will be rrandomized (create a random int array to generate relationLevel for all the characters)
-        //     4. Generate random key stat level (ha,he,IQ,lo)
-        //     5. Balance = 0;
-        //     6. Occupation = baby
-        //     7. A menu to age, who to interact, activities
-
         Scanner scan = new Scanner(System.in);
         Random rand = new Random();
         String mainCharacterName = " ";
@@ -18,8 +10,8 @@ public class BitLifeRunner {
         mainCharacterName = scan.nextLine();
         int familySize = 0;
         familySize = Family.generateFamilySize();       // save the generated position of family (2-4
-        Character[] characters = new Character[familySize+1];
-        Family[] families = new Family[familySize];
+        Character[] characters = new Character[1];
+        Family[] families = new Family[familySize+1];
         int randomHa = 0;
         int randomHe = 0;
         int randomIQ = 0;
@@ -29,7 +21,7 @@ public class BitLifeRunner {
         int randomSalary = 0;
 
         // Generating main characters and family member' stats
-        for (int i = 0; i < familySize; i++) {    
+        for (int i = 0; i < familySize+1; i++) {    
             switch (i) {
                 case 0:
                     randomHa = Character.generateStat();
@@ -76,9 +68,9 @@ public class BitLifeRunner {
         // Running the BitLife Game
         boolean hasDied = false;
         int option = -1; // keep track of the player input 
-        System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age:" + characters[0].getAge());  
         while (hasDied == false) {
-            System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age" + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
+            System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age: " + characters[0].getAge());  
+            System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age " + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
             option = scan.nextInt();
             switch (option) {
                 case 1: 
@@ -88,7 +80,7 @@ public class BitLifeRunner {
                     System.out.println("Incomplete");
                     break;
                 case 3: 
-                    System.out.println("Incomplete");
+                    addAge(characters, families);
                     break;
                 case 4: 
                     displayFamily(families, familySize);
@@ -104,6 +96,16 @@ public class BitLifeRunner {
     // Runner Methods
     public static void checkProfile(Character[] characters) {
         System.out.println("\n" + characters[0].toString());
+    }
+
+    public static void addAge(Character[] characters, Family[] families) {
+        for (int i = 0; i < characters.length; i++) {
+            characters[i].addAge();
+        }
+        for (int i = 0; i < families.length; i++) {
+             families[i].addAge();
+        }
+        checkProfile(characters);
     }
 
     public static void displayFamily(Family[] families, int familySize) {

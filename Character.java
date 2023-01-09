@@ -150,8 +150,8 @@ public class Character {
     }
 
     //methods
-    public void addAge(){
-        age++;
+    public void addAge() {
+        age++; 
     }
 
     public static int generateStat() {//looks, health, happiness, IQ, and relationshiplvl all share this method
