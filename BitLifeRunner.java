@@ -105,7 +105,6 @@ public class BitLifeRunner {
         for (int i = 0; i < families.length-1; i++) {
             families[i].addAge();
         }
-        checkProfile(characters);
     }
 
     public static void displayFamily(Family[] families, int familySize) {
