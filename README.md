@@ -1,10 +1,8 @@
 # BitLife
 
 To Do list
-1. Decide how to limit the amount of action per age.
-2. Create a death method (chance of dying = 0.2 x age)
+1. Create a death method (chance of dying = 0.05 x age) apply this to all the other characters 
 
- 
  
 Git Commands
 1. git branch (branchname)  // Create the branch

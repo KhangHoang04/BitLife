@@ -57,11 +57,6 @@
                 decrease the relationLevel by 1/5 of the current relationLevel)
                 chance to get hurt if relationship is not family/co-worker
                 limit to once per age 
-            +movieTheater() : void // generate random Movie Title and Genre
-                success rate = relationLevel
-                if passed, increased the relationLevel by 7%
-                if failed, decreased the relationLevel by 7%
-                limit to once per age
             +spendTime() : void 
                 increased relationLevel by 5%
                 limit to once per age

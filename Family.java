@@ -1,12 +1,13 @@
 import java.util.Random;
 
-public class Family extends Character{
+public class Family extends Character{  
 
     //private members
     private int familySize = 0;
     private int relationLevel = 0;
 
     // Constructor
+    // Takes all the private members and methods from the character class 
     public Family(String name, int age, double balance, int salary, String maritalStatus, String education,
     int happiness, int health, int IQ, int looks, int relationLevel) {
         super(name, age, balance, salary, maritalStatus, education, happiness, health, IQ, looks);
@@ -42,6 +43,7 @@ public class Family extends Character{
     }
     
     // Methods
+    // Generate a number from 2-5 to represent to make random amount of family members in a family
     public static int generateFamilySize() {
         Random rand = new Random();
         int familySize = 0;
@@ -49,41 +51,43 @@ public class Family extends Character{
         return familySize;
     }
 
+    // generates random age within a range of ages depending on character role
     public static int generateAge(int i) { 
         Random rand = new Random();
         int age = 0;
-        if (i > 0 && i < 3) {  // i represent the placement of the character array
+        // i represent the placement of the families object array
+        if (i >= 0 && i <= 1) {  // Generate mother and father age range 
             age = rand.nextInt(25)+18;
-        } else if (i == 0) {
-            age = 0;
         } else {
-            age = rand.nextInt(3);
+            age = rand.nextInt(4)-2;  // Generate siblings age range 
         }
         return age;
     }
 
+    // generates random highest education level for characters
     public static String generateEducation() {
         Random rand = new Random();
         String education = " ";
-        if (rand.nextInt(4) == 0) {
+        if (rand.nextInt(4) == 0) { // 1/4 chance of being middle school graduate 
             education = "Middle School";
-        } else if (rand.nextInt(4) == 1) {
+        } else if (rand.nextInt(4) == 1) {  // 1/4 chance of of being a High School graduate
             education = "High School";
         } else {
-            education = "College";
+            education = "College";// 1/2 chance of being a college graduate
         }
         return education;
     }
 
+    // generates a random salary from a range depending on education
     public static int generateSalary(int age){
         Random rand = new Random();
         int salary = 0;
         generateEducation();
-        if (generateEducation().charAt(0) == 'M') {
+        if (generateEducation().charAt(0) == 'M') {// Middle School
             salary = rand.nextInt(20000)+30000;
-        } else if (generateEducation().charAt(0) == 'H') {
+        } else if (generateEducation().charAt(0) == 'H') {// High School
             salary = rand.nextInt(20000)+40000;
-        }else if(generateEducation().charAt(0) == 'C'){
+        }else if(generateEducation().charAt(0) == 'C'){// College
             salary = rand.nextInt(40000)+60000;
         }
         return salary;

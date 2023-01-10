@@ -16,6 +16,7 @@ public class Character {
     private int IQ;
     private int looks;
 
+
     public Character() {
         name = "";
         age = 0;
@@ -148,12 +149,13 @@ public class Character {
     public void setLooks(int looks) {
         this.looks = looks;
     }
-
+   
     //methods
     public void addAge() {
         age++; 
     }
 
+    // Make random number from 0 - 100 and save it to one of the 5 stats that each characters have 
     public static int generateStat() {//looks, health, happiness, IQ, and relationshiplvl all share this method
         Random rand = new Random();
         int stat = 0;
