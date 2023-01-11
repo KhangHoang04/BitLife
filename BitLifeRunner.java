@@ -37,7 +37,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(i);
-                    families[i-1] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[0] = new Family("Father", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 2:
                     randomHa = Character.generateStat();
@@ -45,7 +45,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(i);
-                    families[i-1] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[1] = new Family("Mother", Family.generateAge(i), Family.generateSalary(Family.generateAge(i)), Family.generateSalary(Family.generateAge(i)), Family.getMaritalStatus(i), Family.generateEducation(), randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 3:
                     randomHa = Character.generateStat();
@@ -53,7 +53,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(i);
-                    families[i-1] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[2] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
                 case 4:
                     randomHa = Character.generateStat();
@@ -61,7 +61,7 @@ public class BitLifeRunner {
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
                     randomAge = Family.generateAge(i);
-                    families[i-1] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
+                    families[3] = new Family("Sibling " + (i-2), Family.generateAge(i), 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks, Family.generateStat());
                     break;
             }
         }
@@ -78,19 +78,15 @@ public class BitLifeRunner {
                     checkProfile(characters);
                     break;
                 case 2: 
-                    System.out.println("Mother died");
-                    adjustFamily(families, 1, familySize);
-                    familySize--;
-                    System.out.println("Family size:" + familySize);
                     break;
                 case 3: 
                     addAge(characters, families, ageActionLimit);
-                    hasDied = calcDeath(characters, families, rand, familySize);
+                    hasDied = calcDeathMain(characters, rand);
+                    familySize = calcDeathFam(families, rand, familySize);
                     break;
                 case 4: 
                     displayFamily(families, familySize);
-                    System.out.println("Family size:" + familySize);
-                    interactFamily(families, familySize, scan, rand, ageActionLimit); // Ask us who to interact with and display the different option of interaction 
+                    // interactFamily(families, familySize, scan, rand, ageActionLimit); // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
                     System.out.println("Incomplete");
@@ -106,15 +102,15 @@ public class BitLifeRunner {
 
     // Increase the age of all the character, families, and reset the ageActionLimit to 0
     public static void addAge(Character[] characters, Family[] families, int[] ageActionLimit) {
-        for (int i = 0; i < characters.length; i++) {
-            characters[i].addAge();
-        }
-        for (int i = 0; i < families.length-1; i++) {
-            families[i].addAge();
-        }
-        for (int i = 0; i < ageActionLimit.length; i++) {
-            ageActionLimit[i] = 0;
-        }
+            for (int i = 0; i < characters.length; i++) {
+                characters[i].addAge();
+            }
+            for (int i = 0; i < families.length; i++) {
+                families[i].addAge();
+            }
+            for (int i = 0; i < ageActionLimit.length; i++) {
+                ageActionLimit[i] = 0;
+            }
     }
 
     // Display the stats of all the families member
@@ -179,41 +175,59 @@ public class BitLifeRunner {
     }
 
     // calculate the chance of death for each character
-    public static boolean calcDeath(Character[] characters, Family[] families, Random rand, int familySize){
+    public static boolean calcDeathMain(Character[] characters, Random rand){
         double death = 0.00;
         boolean hasDied = false;
         for (int i = 0; i < characters.length; i++) {
             death = characters[i].getAge() * 0.1;
             if (rand.nextDouble() * 10 <= death) {
                 System.out.println("You have died");
-                hasDied = true;
-            }
-        }
-        for (int i = 0; i < families.length; i++) {
-            death = families[i].getAge() * 0.1;
-            if (rand.nextDouble() <= 0.5) {
-                System.out.println(families[i].getName() + " has died");
-                adjustFamily(families, i, familySize);
-                familySize--;
+                //hasDied = true;
             }
         }
         return hasDied;
     }
 
-    // Adjust the family object after a death
-    public static void adjustFamily(Family[] families, int index, int familySize) {
-        Family[] familiesCopy = new Family[familySize-1];
-
-        // Copy the elements from starting till index
-        // from original array to the other array
-        System.arraycopy(families, 0, familiesCopy, 0, index);
- 
-        // Copy the elements from index + 1 till end
-        // from original array to the other array
-        System.arraycopy(families, index + 1, familiesCopy, index, families.length - index - 1);
-        for (int i = 0; i < familiesCopy.length; i++) {
-            families[i] = familiesCopy[i];
+    public static int calcDeathFam(Family[] families, Random rand, int familySize) {
+        for (int j = 0; j < familySize; j++) {
+            double death = families[j].getAge() * 0.1;
+            if (rand.nextDouble() <= 0.5) {
+                System.out.println(families[j].getName() + " has died");
+                familySize = adjustFamily(families, j, familySize);
+            }
         }
+        return familySize;
     }
 
+    // Adjust the family object after a death
+    public static int adjustFamily(Family[] families, int index, int familySize) {
+        if (familySize > 1) {
+            Family[] familiesCopy = new Family[familySize-1];
+            if (index == 0) {   // Remove the first family member
+                System.arraycopy(families, 1, familiesCopy, 0, familySize-1);
+                for (int i = 0; i < familiesCopy.length; i++) {
+                    families[i] = familiesCopy[i];
+                }
+            }
+            else if (index == familySize-1) { // Remove the last family member
+                System.arraycopy(families, 0, familiesCopy, 0, index);
+                for (int i = 0; i < familiesCopy.length; i++) {
+                    families[i] = familiesCopy[i];
+                }  
+            } 
+            else {  // Father Mother Sib1 Sib2 ---> Take Mother --> Father Sib1 Sib2            
+                System.arraycopy(families, 0, familiesCopy, 0, index);
+                for (int i = index; i < familiesCopy.length; i++) {
+                    familiesCopy[i] = families[i+1]; 
+                }  
+                for (int i = 0; i < familiesCopy.length; i++) {
+                    families[i] = familiesCopy[i];
+                }  
+            } 
+        }
+        if (familySize > 0) {
+            familySize--;   
+        }
+        return familySize;
+    }
 }
