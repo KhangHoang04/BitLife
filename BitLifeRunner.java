@@ -11,7 +11,7 @@ public class BitLifeRunner {
         int familySize = 0;
         familySize = Family.generateFamilySize();       // save the generated position of family (2-4
         Character[] characters = new Character[1];
-        Family[] families = new Family[familySize+1];
+        Family[] families = new Family[familySize];
         int randomHa = 0;
         int randomHe = 0;
         int randomIQ = 0;
@@ -78,13 +78,18 @@ public class BitLifeRunner {
                     checkProfile(characters);
                     break;
                 case 2: 
-                    System.out.println("Incomplete");
+                    System.out.println("Mother died");
+                    adjustFamily(families, 1, familySize);
+                    familySize--;
+                    System.out.println("Family size:" + familySize);
                     break;
                 case 3: 
                     addAge(characters, families, ageActionLimit);
+                    hasDied = calcDeath(characters, families, rand, familySize);
                     break;
                 case 4: 
                     displayFamily(families, familySize);
+                    System.out.println("Family size:" + familySize);
                     interactFamily(families, familySize, scan, rand, ageActionLimit); // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
@@ -93,8 +98,7 @@ public class BitLifeRunner {
             }
         }
     }
-    
-    // Runner Methods
+
     // Display the stats of the main character 
     public static void checkProfile(Character[] characters) {
         System.out.println("\n" + characters[0].toString());
@@ -113,7 +117,7 @@ public class BitLifeRunner {
         }
     }
 
-    // DIsplay the stats of all the families member
+    // Display the stats of all the families member
     public static void displayFamily(Family[] families, int familySize) {
         for (int i = 0; i < familySize; i++) {
             System.out.println("\n" + families[i].toString());
@@ -145,6 +149,7 @@ public class BitLifeRunner {
         }
     }
 
+    //compliments family members and increase/decrease relationlvl based on current relationlvl probability
     public static void giveCompliment(int[] ageActionLimit, Family[] families, int chooseFam, Random rand, Character[] characters) {
         if (ageActionLimit[0] < 5) {
             if (generateOutcome(families, chooseFam, rand) == true) {
@@ -160,6 +165,7 @@ public class BitLifeRunner {
         }
     }
 
+    // use this method to calculate the chance of actions succeeding in increasing relationlvl
     public static boolean generateOutcome(Family[] families, int chooseFam, Random rand) {
         int chance = -1;
         boolean success = false;
@@ -171,4 +177,43 @@ public class BitLifeRunner {
         }
     return success;
     }
+
+    // calculate the chance of death for each character
+    public static boolean calcDeath(Character[] characters, Family[] families, Random rand, int familySize){
+        double death = 0.00;
+        boolean hasDied = false;
+        for (int i = 0; i < characters.length; i++) {
+            death = characters[i].getAge() * 0.1;
+            if (rand.nextDouble() * 10 <= death) {
+                System.out.println("You have died");
+                hasDied = true;
+            }
+        }
+        for (int i = 0; i < families.length; i++) {
+            death = families[i].getAge() * 0.1;
+            if (rand.nextDouble() <= 0.5) {
+                System.out.println(families[i].getName() + " has died");
+                adjustFamily(families, i, familySize);
+                familySize--;
+            }
+        }
+        return hasDied;
+    }
+
+    // Adjust the family object after a death
+    public static void adjustFamily(Family[] families, int index, int familySize) {
+        Family[] familiesCopy = new Family[familySize-1];
+
+        // Copy the elements from starting till index
+        // from original array to the other array
+        System.arraycopy(families, 0, familiesCopy, 0, index);
+ 
+        // Copy the elements from index + 1 till end
+        // from original array to the other array
+        System.arraycopy(families, index + 1, familiesCopy, index, families.length - index - 1);
+        for (int i = 0; i < familiesCopy.length; i++) {
+            families[i] = familiesCopy[i];
+        }
+    }
+
 }

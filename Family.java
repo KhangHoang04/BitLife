@@ -56,7 +56,7 @@ public class Family extends Character{
         Random rand = new Random();
         int age = 0;
         // i represent the placement of the families object array
-        if (i >= 0 && i <= 1) {  // Generate mother and father age range 
+        if (i >= 0 && i <= 2) {  // Generate mother and father age range 
             age = rand.nextInt(25)+18;
         } else {
             age = rand.nextInt(4)-2;  // Generate siblings age range 
