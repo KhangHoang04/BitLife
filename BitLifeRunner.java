@@ -86,7 +86,7 @@ public class BitLifeRunner {
                     break;
                 case 4: 
                     displayFamily(families, familySize);
-                    // interactFamily(families, familySize, scan, rand, ageActionLimit); // Ask us who to interact with and display the different option of interaction 
+                    interactFamily(families, familySize, scan, rand, ageActionLimit); // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
                     System.out.println("Incomplete");
@@ -138,7 +138,9 @@ public class BitLifeRunner {
                 case 1: // Compliment action 
                     giveCompliment(ageActionLimit, families, chooseFam, rand, families);
                     break;
-                case 2:
+                case 2: // Conversation action
+                    haveConversation();
+                case 3:
                     wantToBack = true;
                     break;     
             }
