@@ -1,8 +1,13 @@
 # BitLife
 
 To Do list
-1. Create a death method (chance of dying = 0.05 x age) apply this to all the other characters 
+1. Fix at line 136 from repeating after the user already choose "back" option
+2. Understand the runner class fully (all I change was iside the runner class, Helen). Ask me whichever you are confused on
+3. Create a conversation feature. (guarenteed to work) it is called at lines 141-142
+   +conversation() : void // increase relationLevel by 5%
+   limit to twice per age --> change the ageActionLimit at index 1 
 
+______________________________________________________________________________________________________________________________
  
 Git Commands
 1. git branch (branchname)  // Create the branch
@@ -12,16 +17,4 @@ Git Commands
 5. git push origin (branchname)
 
 git branch // Check which branch you are in, look for which branch is highlighted to be green
-
-
-
-
-
-
-
-
-
-
-
-
 
