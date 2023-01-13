@@ -131,15 +131,15 @@ public class BitLifeRunner {
         }
         chooseFam = scan.nextInt();
         while (wantToBack == false) {
-        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Back");
+        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Back");
         chooseInteract = scan.nextInt();
-            System.out.println("\n1. Compliment \n2. Back");
+            System.out.println("\n1. Compliment \n2. Conversation \n3. Back");
             switch (chooseInteract) {
                 case 1: // Compliment action 
                     giveCompliment(ageActionLimit, families, chooseFam, rand, families);
                     break;
                 case 2: // Conversation action
-                    haveConversation();
+                    haveConversation(ageActionLimit, families, chooseFam);
                 case 3:
                     wantToBack = true;
                     break;     
@@ -149,7 +149,7 @@ public class BitLifeRunner {
 
     //compliments family members and increase/decrease relationlvl based on current relationlvl probability
     public static void giveCompliment(int[] ageActionLimit, Family[] families, int chooseFam, Random rand, Character[] characters) {
-        if (ageActionLimit[0] < 5) {
+        if (ageActionLimit[0] < 5) {//in one year, you can only give 5 compiments
             if (generateOutcome(families, chooseFam, rand) == true) {
                 families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()+5);
                 System.out.println(families[chooseFam].getName() + " is flattered by your compliment. +5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
@@ -157,9 +157,20 @@ public class BitLifeRunner {
                 families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()-5);
                 System.out.println(families[chooseFam].getName() + " was not flattered by your compliment. -5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
             }
-            ageActionLimit[0]++;
+            ageActionLimit[0]++;//increments the ageActionLimit to cap amount of compliments you have each year
         } else {
             System.out.println("You have given enough compliments at this age, try again next year");
+        }
+    }
+    
+    // conversation method increases relationlvl to family members
+    public static void haveConversation(int [] ageActionLimit, Family[] families, int chooseFam){
+        if(ageActionLimit[1] < 2){//only allowed to have two conversations per age
+            families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()+5);
+            System.out.println(families[chooseFam].getName() + " is pleased with your conversation. +5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
+            ageActionLimit[1]++;
+        }else{
+            System.out.println("You have reached your max conversation time, try again next year.");
         }
     }
 
@@ -168,7 +179,7 @@ public class BitLifeRunner {
         int chance = -1;
         boolean success = false;
         chance = rand.nextInt(101);
-        if (chance <= families[chooseFam].getRelationLevel()) {
+        if (chance <= families[chooseFam].getRelationLevel()) {//if random number from 0-100 is less than/equal to current relationlvl of family mem, you add relationlvl points to current status
             success = true;
         } else {
             success = false;
@@ -182,9 +193,9 @@ public class BitLifeRunner {
         boolean hasDied = false;
         for (int i = 0; i < characters.length; i++) {
             death = characters[i].getAge() * 0.1;
-            if (rand.nextDouble() * 10 <= death) {
+            if (rand.nextDouble() * 10 <= death) {// with every year older, character is more likely to die
                 System.out.println("You have died");
-                //hasDied = true;
+                hasDied = true;
             }
         }
         return hasDied;
@@ -232,4 +243,5 @@ public class BitLifeRunner {
         }
         return familySize;
     }
+
 }
