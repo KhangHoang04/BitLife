@@ -85,8 +85,8 @@ public class BitLifeRunner {
                     familySize = calcDeathFam(families, rand, familySize);
                     break;
                 case 4: 
-                    displayFamily(families, familySize);
-                    interactFamily(families, familySize, scan, rand, ageActionLimit); // Ask us who to interact with and display the different option of interaction 
+                    displayFamily(families, familySize, scan, rand, ageActionLimit);
+                    // Ask us who to interact with and display the different option of interaction 
                     break;
                 case 5:
                     System.out.println("Incomplete");
@@ -114,9 +114,14 @@ public class BitLifeRunner {
     }
 
     // Display the stats of all the families member
-    public static void displayFamily(Family[] families, int familySize) {
-        for (int i = 0; i < familySize; i++) {
-            System.out.println("\n" + families[i].toString());
+    public static void displayFamily(Family[] families, int familySize, Scanner scan, Random rand, int[] ageActionLimit) {
+        if (familySize == 0) {
+            System.out.println("You are paying vistit to your families...");
+        } else {
+            for (int i = 0; i < familySize; i++) {
+                System.out.println("\n" + families[i].toString());
+            }
+        interactFamily(families, familySize, scan, rand, ageActionLimit);
         }
     }
 
@@ -133,13 +138,13 @@ public class BitLifeRunner {
         while (wantToBack == false) {
         System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Back");
         chooseInteract = scan.nextInt();
-            System.out.println("\n1. Compliment \n2. Conversation \n3. Back");
             switch (chooseInteract) {
                 case 1: // Compliment action 
                     giveCompliment(ageActionLimit, families, chooseFam, rand, families);
                     break;
                 case 2: // Conversation action
                     haveConversation(ageActionLimit, families, chooseFam);
+                    break;
                 case 3:
                     wantToBack = true;
                     break;     
@@ -150,12 +155,21 @@ public class BitLifeRunner {
     //compliments family members and increase/decrease relationlvl based on current relationlvl probability
     public static void giveCompliment(int[] ageActionLimit, Family[] families, int chooseFam, Random rand, Character[] characters) {
         if (ageActionLimit[0] < 5) {//in one year, you can only give 5 compiments
-            if (generateOutcome(families, chooseFam, rand) == true) {
+            // If it works
+            if (generateOutcome(families, chooseFam, rand) == true && families[chooseFam].getRelationLevel() < 95) {
                 families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()+5);
                 System.out.println(families[chooseFam].getName() + " is flattered by your compliment. +5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
-            } else {
+            } else if (generateOutcome(families, chooseFam, rand) == true && families[chooseFam].getRelationLevel() >= 95) {
+                families[chooseFam].setRelationLevel(100);
+                System.out.println(families[chooseFam].getName() + " is flattered by your compliment. You have reached the highest relation level --> " + families[chooseFam].getRelationLevel());
+            }   
+            // If it doesn't work
+            if (generateOutcome(families, chooseFam, rand) == false && families[chooseFam].getRelationLevel() > 5) {
                 families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()-5);
                 System.out.println(families[chooseFam].getName() + " was not flattered by your compliment. -5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
+            } else if (generateOutcome(families, chooseFam, rand) == false && families[chooseFam].getRelationLevel() <= 5) {
+                families[chooseFam].setRelationLevel(0);
+                System.out.println(families[chooseFam].getName() + " was not flattered by your compliment. You have reached the lowest relation level --> " + families[chooseFam].getRelationLevel());
             }
             ageActionLimit[0]++;//increments the ageActionLimit to cap amount of compliments you have each year
         } else {
@@ -165,12 +179,19 @@ public class BitLifeRunner {
     
     // conversation method increases relationlvl to family members
     public static void haveConversation(int [] ageActionLimit, Family[] families, int chooseFam){
-        if(ageActionLimit[1] < 2){//only allowed to have two conversations per age
-            families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()+5);
-            System.out.println(families[chooseFam].getName() + " is pleased with your conversation. +5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
-            ageActionLimit[1]++;
+        if(ageActionLimit[1] < 2){ //only allowed to have two conversations per age
+            //relationlvl should not exceed 100
+            if(families[chooseFam].getRelationLevel() < 95){
+                families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()+5);
+                System.out.println(families[chooseFam].getName() + " is pleased with your conversation. +5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
+                ageActionLimit[1]++;
+
+            }else if(families[chooseFam].getRelationLevel() >= 95){
+                families[chooseFam].setRelationLevel(100);
+                System.out.println("You have reached your maximum relation level.");
+            }
         }else{
-            System.out.println("You have reached your max conversation time, try again next year.");
+            System.out.println("You have ran out of topics this year, try again next year.");
         }
     }
 
@@ -189,11 +210,9 @@ public class BitLifeRunner {
 
     // calculate the chance of death for each character
     public static boolean calcDeathMain(Character[] characters, Random rand){
-        double death = 0.00;
         boolean hasDied = false;
         for (int i = 0; i < characters.length; i++) {
-            death = characters[i].getAge() * 0.1;
-            if (rand.nextDouble() * 10 <= death) {// with every year older, character is more likely to die
+            if (rand.nextInt(800) <= characters[i].getAge()) {// with every year older, character is more likely to die
                 System.out.println("You have died");
                 hasDied = true;
             }
@@ -203,8 +222,7 @@ public class BitLifeRunner {
 
     public static int calcDeathFam(Family[] families, Random rand, int familySize) {
         for (int j = 0; j < familySize; j++) {
-            double death = families[j].getAge() * 0.1;
-            if (rand.nextDouble() <= 0.5) {
+            if (rand.nextInt(500) <= families[j].getAge()) {
                 System.out.println(families[j].getName() + " has died");
                 familySize = adjustFamily(families, j, familySize);
             }

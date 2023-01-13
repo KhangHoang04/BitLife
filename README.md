@@ -1,11 +1,8 @@
 # BitLife
 
 To Do list
-1. Fix at line 136 from repeating after the user already choose "back" option
-2. Understand the runner class fully (all I change was iside the runner class, Helen). Ask me whichever you are confused on
-3. Create a conversation feature. (guarenteed to work) it is called at lines 141-142
-   +conversation() : void // increase relationLevel by 5%
-   limit to twice per age --> change the ageActionLimit at index 1 
+1. Adjust the death rate for main and families 
+2. Option int input validation 
 
 ______________________________________________________________________________________________________________________________
  
