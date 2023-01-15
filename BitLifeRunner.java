@@ -72,7 +72,8 @@ public class BitLifeRunner {
         while (hasDied == false) { // Stop the game once the main character dies 
             System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age: " + characters[0].getAge());  
             System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age " + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
-            option = scan.nextInt();
+            // user input is option it will then be validated if it is an integer
+            option = validateInput(option, scan);
             switch (option) {
                 case 1: 
                     checkProfile(characters);
@@ -91,9 +92,27 @@ public class BitLifeRunner {
                 case 5:
                     System.out.println("Incomplete");
                     break;
+                default://if user entered an integer but not in range
+                    System.out.println("Invalid range");
+                    break;
             }
         }
     }
+    // Input validation 
+    public static int validateInput(int option, Scanner scan){
+        boolean valid = false;
+        while (valid == false) {//keeps looping until user enters an int
+            if (scan.hasNextInt()) {//checks if it is an int
+                option = scan.nextInt();// takes in the int
+                valid = true;
+            } else {
+                System.out.println("Please enter a valid integer");
+                scan.next();//user retry
+                break;
+            }
+        }
+        return option;
+    }   
 
     // Display the stats of the main character 
     public static void checkProfile(Character[] characters) {
@@ -102,15 +121,15 @@ public class BitLifeRunner {
 
     // Increase the age of all the character, families, and reset the ageActionLimit to 0
     public static void addAge(Character[] characters, Family[] families, int[] ageActionLimit) {
-            for (int i = 0; i < characters.length; i++) {
-                characters[i].addAge();
-            }
-            for (int i = 0; i < families.length; i++) {
-                families[i].addAge();
-            }
-            for (int i = 0; i < ageActionLimit.length; i++) {
-                ageActionLimit[i] = 0;
-            }
+        for (int i = 0; i < characters.length; i++) {
+            characters[i].addAge();
+        }
+        for (int i = 0; i < families.length; i++) {
+            families[i].addAge();
+        }
+        for (int i = 0; i < ageActionLimit.length; i++) {
+            ageActionLimit[i] = 0;
+        }
     }
 
     // Display the stats of all the families member
@@ -129,15 +148,29 @@ public class BitLifeRunner {
     public static void interactFamily(Family[] families, int familySize, Scanner scan, Random rand, int[] ageActionLimit) {
         int chooseFam = 0;
         int chooseInteract = 0;
+        boolean inRange = false;
         boolean wantToBack = false;
-        System.out.println("\nWho do you want to interact with?"); 
+        System.out.println("\nWho do you want to interact with?");// asks question
         for (int i = 0; i < familySize; i++) {
-            System.out.println(i + ". " + families[i].getName());
+            System.out.println(i + ". " + families[i].getName());// print out name
         }
-        chooseFam = scan.nextInt();
+        while (inRange == false) {
+            chooseFam = validateInput(chooseFam, scan);// checks if who you want to interact with is an int
+            if (chooseFam < familySize) {// int has to be within range
+                inRange = true;// stops the loop
+            } else {
+                System.out.println("Invalid range"); 
+                System.out.println("\nWho do you want to interact with?");
+                for (int i = 0; i < familySize; i++) {//the family user can interact with pops up to show what the user can pick within the range
+                    System.out.println(i + ". " + families[i].getName());
+                }
+            }
+        }
+
+        //loops until user inputs a valid integer and is in range
         while (wantToBack == false) {
         System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Back");
-        chooseInteract = scan.nextInt();
+        chooseInteract = validateInput(chooseInteract, scan);
             switch (chooseInteract) {
                 case 1: // Compliment action 
                     giveCompliment(ageActionLimit, families, chooseFam, rand, families);
@@ -147,7 +180,10 @@ public class BitLifeRunner {
                     break;
                 case 3:
                     wantToBack = true;
-                    break;     
+                    break;  
+                default:
+                    System.out.println("Invalid range");
+                    break;   
             }
         }
     }
@@ -188,7 +224,8 @@ public class BitLifeRunner {
 
             }else if(families[chooseFam].getRelationLevel() >= 95){
                 families[chooseFam].setRelationLevel(100);
-                System.out.println("You have reached your maximum relation level.");
+                System.out.println("You have reached your maximum relation level. Relation level: 100");
+                ageActionLimit[1]++;
             }
         }else{
             System.out.println("You have ran out of topics this year, try again next year.");
@@ -212,7 +249,7 @@ public class BitLifeRunner {
     public static boolean calcDeathMain(Character[] characters, Random rand){
         boolean hasDied = false;
         for (int i = 0; i < characters.length; i++) {
-            if (rand.nextInt(800) <= characters[i].getAge()) {// with every year older, character is more likely to die
+            if (rand.nextInt(1000) <= characters[i].getAge()) {// with every year older, character is more likely to die
                 System.out.println("You have died");
                 hasDied = true;
             }
@@ -222,7 +259,7 @@ public class BitLifeRunner {
 
     public static int calcDeathFam(Family[] families, Random rand, int familySize) {
         for (int j = 0; j < familySize; j++) {
-            if (rand.nextInt(500) <= families[j].getAge()) {
+            if (rand.nextInt(1000) <= families[j].getAge()) {
                 System.out.println(families[j].getName() + " has died");
                 familySize = adjustFamily(families, j, familySize);
             }
@@ -260,6 +297,8 @@ public class BitLifeRunner {
             familySize--;   
         }
         return familySize;
-    }
 
+
+
+    }
 }
