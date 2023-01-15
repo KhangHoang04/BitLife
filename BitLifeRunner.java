@@ -175,7 +175,7 @@ public class BitLifeRunner {
 
         //loops until user inputs a valid integer and is in range
         while (wantToBack == false) {
-        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Back");
+        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Insult \n4. Spend Time \n5. Back");
         chooseInteract = validateInput(chooseInteract, scan);
             switch (chooseInteract) {
                 case 1: // Compliment action 
@@ -184,7 +184,12 @@ public class BitLifeRunner {
                 case 2: // Conversation action
                     haveConversation(ageActionLimit, families, chooseFam);
                     break;
-                case 3:
+                case 3: 
+
+                case 4: 
+                    spendTime(ageActionLimit, families, chooseFam);
+                    break;
+                case 5:
                     wantToBack = true;
                     break;  
                 default:
@@ -230,13 +235,35 @@ public class BitLifeRunner {
 
             }else if(families[chooseFam].getRelationLevel() >= 95){
                 families[chooseFam].setRelationLevel(100);
-                System.out.println("You have reached your maximum relation level. Relation level: 100");
+                System.out.println(families[chooseFam].getName() + " is pleased with your conversation. You have reached your maximum relation level. Relation level: 100");
                 ageActionLimit[1]++;
             }
         }else{
             System.out.println("You have ran out of topics this year, try again next year.");
         }
     }
+
+    // +spendTime() : void 
+    // - increased relationLevel by 5%
+    // - limit to once per age
+    public static void spendTime(int[] ageActionLimit, Family[] families, int chooseFam) {
+        if(ageActionLimit[3] < 1){ 
+            //relationlvl should not exceed 100
+            if(families[chooseFam].getRelationLevel() < 95){
+                families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()+5);
+                System.out.println(families[chooseFam].getName() + " enjoyed spending time with you. +5 to RelationLevel --> " + families[chooseFam].getRelationLevel());
+                ageActionLimit[3]++;
+
+            }else if(families[chooseFam].getRelationLevel() >= 95){
+                families[chooseFam].setRelationLevel(100);
+                System.out.println(families[chooseFam].getName() + " enjoyed spending time with you. You have reached your maximum relation level. Relation level: 100");
+                ageActionLimit[3]++;
+            }
+        }else{
+            System.out.println("You are too busy right now, try again next year.");
+        }
+    }
+
 
     // use this method to calculate the chance of actions succeeding in increasing relationlvl
     public static boolean generateOutcome(Family[] families, int chooseFam, Random rand) {
