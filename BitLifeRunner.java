@@ -185,7 +185,7 @@ public class BitLifeRunner {
                     haveConversation(ageActionLimit, families, chooseFam);
                     break;
                 case 3: 
-
+                    
                 case 4: 
                     spendTime(ageActionLimit, families, chooseFam);
                     break;
@@ -243,9 +243,24 @@ public class BitLifeRunner {
         }
     }
 
-    // +spendTime() : void 
-    // - increased relationLevel by 5%
-    // - limit to once per age
+    // Insult Method
+    public static void giveInsult(int [] ageActionLimit, Family[] families, int chooseFam, Random rand, Character[] character){
+        if(ageActionLimit[2] < 1){ // allowed to have one insult per age
+            families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel() - 10);
+            System.out.println(families[chooseFam].getName() + " is mad at your insult. Your relationship level is decreased by 10 --> " + families[chooseFam].getRelationLevel());
+            ageActionLimit[2]++;
+            // 5% chance to have the insult turn physical 
+            if (rand.nextInt(101) < 6 && families[chooseFam].getHealth() < 10 && character[0].getHealth() < 10) { // 5% rare chance of insult being physical --> results in a -10% decrease in health
+                System.out.println("Your insults turned physical. -10 health to " + character[0].getName() + " and " + families[chooseFam].getName());
+                families[chooseFam].setHealth(families[chooseFam].getHealth() - 10 );
+                character[0].setHealth(character[0].getHealth() - 10);
+            }
+        } else {
+            System.out.println(families[chooseFam].getName() + " ignored your insult");
+        }
+    }
+
+    // Spend Time Method
     public static void spendTime(int[] ageActionLimit, Family[] families, int chooseFam) {
         if(ageActionLimit[3] < 1){ 
             //relationlvl should not exceed 100
