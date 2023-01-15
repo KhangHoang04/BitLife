@@ -5,13 +5,10 @@ To Do list
     - decrease the relationLevel based on the current relationLevel (1/5 of the current relationLevel)
     - Rare chance to become physical -10% health (5% chance)
     - limit to once per age 
-2. Modified the calDeathMain death chance to include 
-    - (rand.nextInt(1000) - (100 - characters[0].getHealth() * 3)
-    - To simulate a person with low health % should have increased chance of dying 
-3. +spendTime() : void 
+2. +spendTime() : void 
     - increased relationLevel by 5%
     - limit to once per age
-4. Have an option to quit the game in the main menu
+3. Have an option to quit the game in the main menu
 
 
 ______________________________________________________________________________________________________________________________
