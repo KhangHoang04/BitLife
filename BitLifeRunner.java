@@ -29,7 +29,7 @@ public class BitLifeRunner {
                     randomHe = Character.generateStat();
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
-                    characters[i] = new Character(mainCharacterName, 0, 0.00, 0, Family.getMaritalStatus(i), "None", randomHa, randomHe, randomIQ, randomLooks);
+                    characters[i] = new Character(mainCharacterName, 0, 0.00, 0, "Single", "None", randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 1:
                     randomHa = Character.generateStat();
@@ -65,39 +65,45 @@ public class BitLifeRunner {
                     break;
             }
         }
+    
+        // Run the BitLife Game 
+        BitLifeGame(scan, rand, characters, families, ageActionLimit, familySize);
+    }
 
-        // Running the BitLife Game
-        boolean hasDied = false;
-        int option = -1; // keep track of the player input 
-        while (hasDied == false) { // Stop the game once the main character dies 
-            System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age: " + characters[0].getAge());  
-            System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age " + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
-            // user input is option it will then be validated if it is an integer
-            option = validateInput(option, scan);
-            switch (option) {
-                case 1: 
-                    checkProfile(characters);
-                    break;
-                case 2: 
-                    break;
-                case 3: 
-                    addAge(characters, families, ageActionLimit);
-                    hasDied = calcDeathMain(characters, rand);
-                    familySize = calcDeathFam(families, rand, familySize);
-                    break;
-                case 4: 
-                    displayFamily(families, familySize, scan, rand, ageActionLimit);
-                    // Ask us who to interact with and display the different option of interaction 
-                    break;
-                case 5:
-                    System.out.println("Incomplete");
-                    break;
-                default://if user entered an integer but not in range
-                    System.out.println("Invalid range");
-                    break;
+    // BitLife Game Method
+    public static void BitLifeGame(Scanner scan, Random rand, Character[] characters, Family[] families, int[] ageActionLimit, int familySize) {
+            boolean hasDied = false;
+            int option = -1; // keep track of the player input
+            while (hasDied == false) { // Stop the game once the main character dies 
+                System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age: " + characters[0].getAge());  
+                System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age " + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
+                // user input is option it will then be validated if it is an integer
+                option = validateInput(option, scan);
+                switch (option) {
+                    case 1: 
+                        checkProfile(characters);
+                        break;
+                    case 2: 
+                        break;
+                    case 3: 
+                        addAge(characters, families, ageActionLimit);
+                        hasDied = calcDeathMain(characters, rand);
+                        familySize = calcDeathFam(families, rand, familySize);
+                        break;
+                    case 4: 
+                        displayFamily(families, familySize, scan, rand, ageActionLimit);
+                        // Ask us who to interact with and display the different option of interaction 
+                        break;
+                    case 5:
+                        System.out.println("Incomplete");
+                        break;
+                    default://if user entered an integer but not in range
+                        System.out.println("Invalid range");
+                        break;
+                }
             }
         }
-    }
+
     // Input validation 
     public static int validateInput(int option, Scanner scan){
         boolean valid = false;
@@ -245,7 +251,7 @@ public class BitLifeRunner {
     return success;
     }
 
-    // calculate the chance of death for each character
+    // calculate the chance of death for the main character
     public static boolean calcDeathMain(Character[] characters, Random rand){
         boolean hasDied = false;
         for (int i = 0; i < characters.length; i++) {
@@ -257,6 +263,7 @@ public class BitLifeRunner {
         return hasDied;
     }
 
+    // Calculate the chance of death for each of the families member
     public static int calcDeathFam(Family[] families, Random rand, int familySize) {
         for (int j = 0; j < familySize; j++) {
             if (rand.nextInt(1000) <= families[j].getAge()) {
