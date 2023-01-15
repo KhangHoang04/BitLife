@@ -255,7 +255,7 @@ public class BitLifeRunner {
     public static boolean calcDeathMain(Character[] characters, Random rand){
         boolean hasDied = false;
         for (int i = 0; i < characters.length; i++) {
-            if (rand.nextInt(1000) <= characters[i].getAge()) {// with every year older, character is more likely to die
+            if (rand.nextInt(5000) <= characters[i].getAge()) {// with every year older, character is more likely to die
                 System.out.println("You have died");
                 hasDied = true;
             }
@@ -266,7 +266,7 @@ public class BitLifeRunner {
     // Calculate the chance of death for each of the families member
     public static int calcDeathFam(Family[] families, Random rand, int familySize) {
         for (int j = 0; j < familySize; j++) {
-            if (rand.nextInt(1000) <= families[j].getAge()) {
+            if (rand.nextInt(3000) <= families[j].getAge()) {
                 System.out.println(families[j].getName() + " has died");
                 familySize = adjustFamily(families, j, familySize);
             }
