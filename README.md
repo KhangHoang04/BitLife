@@ -1,14 +1,7 @@
 # BitLife
 
 To Do list
-1. +insult() : void  
-    - decrease the relationLevel based on the current relationLevel (1/5 of the current relationLevel)
-    - Rare chance to become physical -10% health (5% chance)
-    - limit to once per age 
-2. +spendTime() : void 
-    - increased relationLevel by 5%
-    - limit to once per age
-3. Have an option to quit the game in the main menu
+1. Have an option to quit the game in the main menu
 
 
 ______________________________________________________________________________________________________________________________
