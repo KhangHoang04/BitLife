@@ -175,7 +175,7 @@ public class BitLifeRunner {
 
         //loops until user inputs a valid integer and is in range
         while (wantToBack == false) {
-        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Back");
+        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Insult \n4. Spend Time \n5. Back");
         chooseInteract = validateInput(chooseInteract, scan);
             switch (chooseInteract) {
                 case 1: // Compliment action 
@@ -184,7 +184,10 @@ public class BitLifeRunner {
                 case 2: // Conversation action
                     haveConversation(ageActionLimit, families, chooseFam);
                     break;
-                case 3:
+                case 3: // Insult action
+                    giveInsult(ageActionLimit, families, chooseFam, rand, families);
+                    break;
+                case 5:
                     wantToBack = true;
                     break;  
                 default:
@@ -238,12 +241,35 @@ public class BitLifeRunner {
         }
     }
 
+    // +insult() : void // 
+    // - decrease the relationLevel by 10
+    // - Rare chance to become physical -10% health (5% chance)
+    // - limit to once per age 
+    // insult method
+    public static void giveInsult(int [] ageActionLimit, Family[] families, int chooseFam, Random rand, Character[] character){
+        if(ageActionLimit[2] < 1){ // allowed to have one insult per age
+            families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel() - 10);
+            System.out.println(families[chooseFam].getName() + " is mad at your insult. Your relationship level is decreased by 10 --> " + families[chooseFam].getRelationLevel());
+            ageActionLimit[2]++;
+            // 5% chance to have the insult turn physical 
+            if (rand.nextInt(101) < 6 && families[chooseFam].getHealth() < 10 && character[0].getHealth() < 10) { // 5% rare chance of insult being physical --> results in a -10% decrease in health
+                System.out.println("Your insults turned physical. -10 health to " + character[0].getName() + " and " + families[chooseFam].getName());
+                families[chooseFam].setHealth(families[chooseFam].getHealth() - 10 );
+                character[0].setHealth(character[0].getHealth() - 10);
+            }
+        } else {
+            System.out.println(families[chooseFam].getName() + " ignored your insult");
+        }
+    }
+
+
+
     // use this method to calculate the chance of actions succeeding in increasing relationlvl
     public static boolean generateOutcome(Family[] families, int chooseFam, Random rand) {
         int chance = -1;
         boolean success = false;
         chance = rand.nextInt(101);
-        if (chance <= families[chooseFam].getRelationLevel()) {//if random number from 0-100 is less than/equal to current relationlvl of family mem, you add relationlvl points to current status
+        if (chance <= families[chooseFam].getRelationLevel()) { //if random number from 0-100 is less than/equal to current relationlvl of family mem, you add relationlvl points to current status
             success = true;
         } else {
             success = false;
