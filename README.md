@@ -12,7 +12,7 @@ To Do list
 4. +spendTime() : void 
     - increased relationLevel by 5%
     - limit to once per age
-5. 
+5. Have an option to quit the game in the main menu
 
 
 ______________________________________________________________________________________________________________________________
