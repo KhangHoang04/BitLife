@@ -95,7 +95,7 @@ public class BitLifeRunner {
                         // Ask us who to interact with and display the different option of interaction 
                         break;
                     case 5:
-                        System.out.println("Incomplete");
+                        Activities();
                         break;
                     case 6:
                         System.out.println("\nThank you for playing! \nGame is closing...");
@@ -284,7 +284,7 @@ public class BitLifeRunner {
     }
 
 
-    // use this method to calculate the chance of actions succeeding in increasing relationlvl
+    // Calculate the chance of actions succeeding in increasing relationlvl
     public static boolean generateOutcome(Family[] families, int chooseFam, Random rand) {
         int chance = -1;
         boolean success = false;
@@ -350,8 +350,30 @@ public class BitLifeRunner {
             familySize--;   
         }
         return familySize;
+    }
 
-
-
+    // Activities Method 
+    public static void Activities(Scanner scan) {
+        int option = -1;
+        // Print the menu of activities
+        System.out.println("\nActivities\n\n1. Shopping\n2. Casino\n3. Crime\n4. Doctor\n5. Lottery\n6. Love\n7. Mind & Body"
+        +"\n8. Movie Theater\n9. Plastic Surgery\n10. Back\n\nChoose your activities");
+        option = validateInput(option, scan);
+        switch (option) {
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                
+                break;
+            case 4:
+                
+                break;
+            default:
+                break;
+        }
     }
 }
