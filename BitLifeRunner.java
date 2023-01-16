@@ -76,9 +76,9 @@ public class BitLifeRunner {
             int option = -1; // keep track of the player input
             while (hasDied == false) { // Stop the game once the main character dies 
                 System.out.println("\n" + "Name: " + characters[0].getName() + "\t Balance: " + characters[0].getBalance() + "\t Age: " + characters[0].getAge());  
-                System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age " + "\t 4. Relationships" + "\t 5. Activities" + "\n\n" + "Select your option");
+                System.out.println("\n" + "1. Check Profile" + "\t 2. View Assets" + "\t\t 3. +Age " + "\t 4. Relationships" + "\t 5. Activities" + "\t\t 6. Quit" + "\n\n" + "Select your option");
                 // user input is option it will then be validated if it is an integer
-                option = validateInput(option, scan);
+                option = validateInput(option, scan); 
                 switch (option) {
                     case 1: 
                         checkProfile(characters);
@@ -96,6 +96,10 @@ public class BitLifeRunner {
                         break;
                     case 5:
                         System.out.println("Incomplete");
+                        break;
+                    case 6:
+                        System.out.println("\nThank you for playing! \nGame is closing...");
+                        hasDied = true;
                         break;
                     default://if user entered an integer but not in range
                         System.out.println("Invalid range");
