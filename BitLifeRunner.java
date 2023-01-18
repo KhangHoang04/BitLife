@@ -29,7 +29,7 @@ public class BitLifeRunner {
                     randomHe = Character.generateStat();
                     randomIQ = Character.generateStat();
                     randomLooks = Character.generateStat();
-                    characters[i] = new Character(mainCharacterName, 0, 0.00, 0, "Single", "None", randomHa, randomHe, randomIQ, randomLooks);
+                    characters[0] = new Character(mainCharacterName, 0, 0.00, 0, "Single", "None", randomHa, randomHe, randomIQ, randomLooks);
                     break;
                 case 1:
                     randomHa = Character.generateStat();
@@ -91,11 +91,11 @@ public class BitLifeRunner {
                         familySize = calcDeathFam(families, rand, familySize);
                         break;
                     case 4: 
-                        displayFamily(families, familySize, scan, rand, ageActionLimit);
+                        displayFamily(families, familySize, scan, rand, ageActionLimit, characters);
                         // Ask us who to interact with and display the different option of interaction 
                         break;
                     case 5:
-                        Activities();
+                        Activities(scan);
                         break;
                     case 6:
                         System.out.println("\nThank you for playing! \nGame is closing...");
@@ -143,19 +143,19 @@ public class BitLifeRunner {
     }
 
     // Display the stats of all the families member
-    public static void displayFamily(Family[] families, int familySize, Scanner scan, Random rand, int[] ageActionLimit) {
+    public static void displayFamily(Family[] families, int familySize, Scanner scan, Random rand, int[] ageActionLimit, Character[] characters) {
         if (familySize == 0) {
             System.out.println("You are paying vistit to your families...");
         } else {
             for (int i = 0; i < familySize; i++) {
                 System.out.println("\n" + families[i].toString());
             }
-        interactFamily(families, familySize, scan, rand, ageActionLimit);
+            interactFamily(families, familySize, scan, rand, ageActionLimit, characters);
         }
     }
 
     // let the user interact with family members through a menu of selected family members with different activities to increase/decrease relationshiplvl
-    public static void interactFamily(Family[] families, int familySize, Scanner scan, Random rand, int[] ageActionLimit) {
+    public static void interactFamily(Family[] families, int familySize, Scanner scan, Random rand, int[] ageActionLimit, Character[] characters) {
         int chooseFam = 0;
         int chooseInteract = 0;
         boolean inRange = false;
@@ -179,21 +179,25 @@ public class BitLifeRunner {
 
         //loops until user inputs a valid integer and is in range
         while (wantToBack == false) {
-        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Insult \n4. Spend Time \n5. Back");
+        System.out.println("\nHow do you want to interact? \n1. Compliment \n2. Conversation \n3. Insult \n4. Spend Time \n5. Ask for Money \n6. Back");
         chooseInteract = validateInput(chooseInteract, scan);
             switch (chooseInteract) {
                 case 1: // Compliment action 
-                    giveCompliment(ageActionLimit, families, chooseFam, rand, families);
+                    giveCompliment(ageActionLimit, families, chooseFam, rand, characters);
                     break;
                 case 2: // Conversation action
                     haveConversation(ageActionLimit, families, chooseFam);
                     break;
                 case 3: 
-                    
+                    giveInsult(ageActionLimit, families, chooseFam, rand, families);
+                    break;
                 case 4: 
                     spendTime(ageActionLimit, families, chooseFam);
                     break;
                 case 5:
+                    askForMoney(ageActionLimit, families, chooseFam, characters, rand);
+                    break;
+                case 6:
                     wantToBack = true;
                     break;  
                 default:
@@ -283,6 +287,29 @@ public class BitLifeRunner {
         }
     }
 
+    // Ask For Money Method
+    public static void askForMoney(int[] ageActionLimit, Family[] families, int chooseFam, Character[] characters, Random rand) {
+        if(ageActionLimit[4] < 1) { // // Once per age
+            // The chance of success is based on the current relationship level and will decrease relation level by 10% if failed
+            if (chooseFam == chooseFam) {
+                families[chooseFam].setBalance(families[chooseFam].getBalance() - families[chooseFam].getBalance()/50); // gives 2% of their balance 
+                //characters[0].setBalance(characters[0].getBalance()+families[chooseFam].getBalance()/50);
+                characters[0].setBalance(10000);
+                System.out.println("Balance: $" +  characters[0].getBalance());
+                System.out.println(families[chooseFam].getName() + " gave you $" + families[chooseFam].getBalance()/50 + " ---> Your balance " + characters[0].getBalance());
+            // } else if (generateOutcome(families, chooseFam, rand) == false && families[chooseFam].getRelationLevel() <= 10) { // If fail, display a message and decreased relation level by 10
+            //     families[chooseFam].setRelationLevel(0);
+            //     System.out.println(families[chooseFam].getName() + " refused to give you any money. You have reached the lowest relation level --> " + families[chooseFam].getRelationLevel());
+            // } else if (generateOutcome(families, chooseFam, rand) == false && families[chooseFam].getRelationLevel() > 10) {
+            //     families[chooseFam].setRelationLevel(families[chooseFam].getRelationLevel()-10);
+            //     System.out.println(families[chooseFam].getName() + " refused to give you any money. -10 to RelationLevel --> " + families[chooseFam].getRelationLevel());
+            // }  
+        ageActionLimit[4]++; 
+        } else {
+            System.out.println("you asked enough time for this year, try again next year");
+        }
+    }
+    }
 
     // Calculate the chance of actions succeeding in increasing relationlvl
     public static boolean generateOutcome(Family[] families, int chooseFam, Random rand) {
