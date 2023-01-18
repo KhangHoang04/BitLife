@@ -2,10 +2,21 @@
 
 To Do list
 1. Shopping (Buying Clothes)
+    - Implement after creating jobs
+    - Increased happiness by 5% each purchases 
 2. Casino
+    - Implement after creating jobs 
+    - 21 years+ to enter 
+    - Increased/decreased happiness based on winning/loss
 3. Crime
+    - Implement after creating a jail system (menu)
+    - Bank Robbery (10% to succeed) (A random reward from $10,000 - $1,000,000)
 4. Doctor
+    - Implement after creating random illness and diseases
+    - 50% of curing the illness and diseases 
 5. Lottery
+    - Implement after creating jobs
+    - 1/10,000 to get $5,000,000 (cost $5 - reduce 2% happiness each purchases)
 6. Love
 7. Mind & Body
     - Another menu to ask whether the user want to...
